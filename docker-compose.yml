@@ -1,0 +1,11 @@
+services:
+  uc-intg-doorbird:
+    build: .
+    container_name: uc-intg-doorbird
+    network_mode: host
+    restart: unless-stopped
+    environment:
+      - UC_CONFIG_HOME=/config
+      - UC_INTEGRATION_HTTP_PORT=9099
+    volumes:
+      - ./data:/config

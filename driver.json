@@ -1,0 +1,53 @@
+{
+  "driver_id": "uc_doorbird_driver",
+  "version": "0.1.0",
+  "min_core_api": "0.20.0",
+  "name": { "en": "DoorBird", "de": "DoorBird" },
+  "icon": "uc:integration",
+  "description": {
+    "en": "Control your DoorBird video door station: open the door, switch on the IR light and get doorbell / motion events.",
+    "de": "Steuere deine DoorBird Türstation: Tür öffnen, IR-Licht einschalten und Klingel-/Bewegungsereignisse empfangen."
+  },
+  "port": 9099,
+  "developer": {
+    "name": "mabikus",
+    "url": "https://github.com/mabikus/uc-intg-doorbird"
+  },
+  "home_page": "https://github.com/mabikus/uc-intg-doorbird",
+  "setup_data_schema": {
+    "title": {
+      "en": "DoorBird configuration",
+      "de": "DoorBird Konfiguration"
+    },
+    "settings": [
+      {
+        "id": "info",
+        "label": { "en": "Setup", "de": "Einrichtung" },
+        "field": {
+          "label": {
+            "value": {
+              "en": "Please enter the IP address and the credentials of a DoorBird app user.\nThe user needs the *API operator*, *watch always* and *relay* permissions (DoorBird app → Administration → User).",
+              "de": "Bitte die IP-Adresse und die Zugangsdaten eines DoorBird App-Benutzers eingeben.\nDer Benutzer benötigt die Berechtigungen *API-Operator*, *Immer sehen* und *Relais* (DoorBird App → Administration → Benutzer)."
+            }
+          }
+        }
+      },
+      {
+        "id": "host",
+        "label": { "en": "IP address / hostname", "de": "IP-Adresse / Hostname" },
+        "field": { "text": { "value": "" } }
+      },
+      {
+        "id": "username",
+        "label": { "en": "Username (e.g. abcdef0001)", "de": "Benutzername (z.B. abcdef0001)" },
+        "field": { "text": { "value": "" } }
+      },
+      {
+        "id": "password",
+        "label": { "en": "Password", "de": "Passwort" },
+        "field": { "password": { "value": "" } }
+      }
+    ]
+  },
+  "release_date": "2026-07-19"
+}
