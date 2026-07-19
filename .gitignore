@@ -1,0 +1,12 @@
+__pycache__/
+*.pyc
+.venv/
+venv/
+build/
+dist/
+artifacts/
+*.spec
+*.tar.gz
+config.json
+data/
+.DS_Store
