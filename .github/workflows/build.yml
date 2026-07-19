@@ -11,6 +11,9 @@ env:
   INTG_NAME: uc-intg-doorbird
   PYINSTALLER_TAG: 3.11.13-0.7.0
 
+permissions:
+  contents: write
+
 jobs:
   build:
     name: Build aarch64 driver
@@ -23,27 +26,30 @@ jobs:
 
       - name: Build binary with pyinstaller (aarch64)
         run: |
-          docker run --rm --platform=linux/arm64 \
+          docker run --rm --name builder \
+            --platform=linux/arm64/v8 \
+            --user=$(id -u):$(id -g) \
             -v "${GITHUB_WORKSPACE}:/workspace" \
             docker.io/unfoldedcircle/r2-pyinstaller:${PYINSTALLER_TAG} \
             bash -c "cd /workspace && \
               python -m pip install -r requirements.txt && \
               pyinstaller --clean --onedir --name driver \
                 --add-data driver.json:. \
+                --collect-all zeroconf \
                 intg-doorbird/driver.py"
 
       - name: Package archive
         run: |
           mkdir -p artifacts/bin
-          sudo cp -r dist/driver/* artifacts/bin/
-          sudo cp driver.json artifacts/
+          cp -r dist/driver/* artifacts/bin/
+          cp driver.json artifacts/
           if [[ "${GITHUB_REF}" == refs/tags/v* ]]; then
             VERSION="${GITHUB_REF_NAME}"
           else
             VERSION="dev-${GITHUB_SHA::7}"
           fi
           echo "VERSION=${VERSION}" >> "$GITHUB_ENV"
-          sudo tar -czf "${INTG_NAME}-${VERSION}-aarch64.tar.gz" -C artifacts .
+          tar -czf "${INTG_NAME}-${VERSION}-aarch64.tar.gz" -C artifacts .
 
       - name: Upload build artifact
         uses: actions/upload-artifact@v4
